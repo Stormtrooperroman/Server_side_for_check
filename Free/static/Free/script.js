@@ -2,8 +2,8 @@ $("#test_button").click(function (e) {
     e.preventDefault();
 
     var formData = new FormData();
-    for(var i = 0; i<$('#file')[0].files.length; i++){
-        formData.append('file', $('#file')[0].files[i])
+    for(var i = 0; i<$('#filein')[0].files.length; i++){
+        formData.append('file', $('#filein')[0].files[i])
     }
     
     console.log()
@@ -18,6 +18,11 @@ $("#test_button").click(function (e) {
             
         }
     });
+});
+
+$("#fileB").click(function (e) { 
+    $("#filein").trigger('click');
+    
 });
 
 const chatSocket = new WebSocket(
