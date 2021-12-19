@@ -6,7 +6,6 @@ $("#test_button").click(function (e) {
         formData.append('file', $('#filein')[0].files[i])
     }
     
-    console.log()
     $.ajax({
         type: "POST",
         url: "api/load/",
@@ -14,7 +13,8 @@ $("#test_button").click(function (e) {
         processData: false,
         contentType: false,
         success: function (response) {
-            alert("Ok")
+            $("#content").html("")
+            myModal.show()
             
         }
     });
@@ -25,6 +25,8 @@ $("#fileB").click(function (e) {
     
 });
 
+var myModal = new bootstrap.Modal(document.getElementById('result'), )
+
 const chatSocket = new WebSocket(
     'ws://'
     + window.location.host
@@ -33,7 +35,8 @@ const chatSocket = new WebSocket(
 
 chatSocket.onmessage = function(e) {
     const data = JSON.parse(e.data);
-    console.log(data);
+    $("#content").append("<p class='"+data.status+"'>"+data.message+"</p>");
+
 };
 
 chatSocket.onclose = function(e) {

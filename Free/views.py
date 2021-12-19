@@ -5,8 +5,8 @@ from django import forms
 import json
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
-from Free.tester import main
-
+from Free.algo import main
+import os
 
 # Create your views here.
 
@@ -38,10 +38,11 @@ def work_with_file(request):
     if request.method == 'POST':
         form = FileFieldForm(request.POST, request.FILES)
         files = request.FILES.getlist('file')
-        data = []
+        data = {}
         if form.is_valid():
             for f in files:
-                data.append(handle_uploaded_file(f))
+                name = f
+                data[name]=handle_uploaded_file(f)
            
             
             return HttpResponseThen("Ok", then_callback=work_with_data, arg = data)
@@ -54,10 +55,9 @@ def handle_uploaded_file(f):
     return data
 
 def work_with_data(files):
-    print(files)
-    main()
+    main(files)
 
 
 def room(request, room_name):
-    print("Ok man loch")
+    pass
 

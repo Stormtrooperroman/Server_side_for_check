@@ -8,7 +8,6 @@ class ChatConsumer(WebsocketConsumer):
             "hello",
             self.channel_name
         )
-        print("Hello world",self.channel_name)
         self.accept()
 
     def disconnect(self, close_code):
@@ -18,18 +17,11 @@ class ChatConsumer(WebsocketConsumer):
             self.channel_name
         )
 
-    def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-
-        self.send(text_data=json.dumps({
-            'message': message
-        }))
-
     def chat_message(self, event):
         message = event['message']
-
+        status = event['status']
         # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'message': message
+            'message': message,
+            "status": status
         }))
